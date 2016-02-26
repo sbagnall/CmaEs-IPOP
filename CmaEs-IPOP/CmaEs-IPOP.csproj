@@ -43,8 +43,8 @@
     <Reference Include="AlgLib">
       <HintPath>..\3rdParty\AlgLib.dll</HintPath>
     </Reference>
-    <Reference Include="Meta.Numerics, Version=3.0.0.0, Culture=neutral, PublicKeyToken=67d25c65a6631347, processorArchitecture=MSIL">
-      <HintPath>..\packages\Meta.Numerics.3.0.0\lib\Meta.Numerics.dll</HintPath>
+    <Reference Include="Meta.Numerics, Version=2.2.0.0, Culture=neutral, PublicKeyToken=67d25c65a6631347, processorArchitecture=MSIL">
+      <HintPath>..\packages\Meta.Numerics_2.2.0.0.1.0.0\lib\Meta.Numerics.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />

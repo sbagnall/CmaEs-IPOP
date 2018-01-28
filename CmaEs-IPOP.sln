@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CmaEs-IPOP", "CmaEs-IPOP\CmaEs-IPOP.csproj", "{B7DEE786-B0BF-484B-885D-4B51C60EDE35}"
 EndProject
@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3rdParty", "3rdParty", "{16400ABA-FD7B-46BF-A340-4032E5B2516B}"
 	ProjectSection(SolutionItems) = preProject
 		3rdParty\AlgLib.dll = 3rdParty\AlgLib.dll
+		..\..\..\..\2EEA~1\AppData\Local\Temp\Rar$DRa0.064\Meta.Numerics\Meta.Numerics.dll = ..\..\..\..\2EEA~1\AppData\Local\Temp\Rar$DRa0.064\Meta.Numerics\Meta.Numerics.dll
 	EndProjectSection
 EndProject
 Global
@@ -37,5 +38,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CA5A265E-0DEA-4449-9CCC-7331201A1BB2}
 	EndGlobalSection
 EndGlobal

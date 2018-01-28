@@ -1,0 +1,2 @@
+Removed AlgLib.dll because of its License agreement.
+Replaced with Accord.Net EigenvalueDecomposition http://accord-framework.net/docs/html/T_Accord_Math_Decompositions_EigenvalueDecomposition.htm This lead to one unit test fail in debug and 5 in release.

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SteveBagnall.CmaEs_IPOP
+﻿namespace SteveBagnall.CmaEs_IPOP
 {
 	public enum StopReason 
 	{ 

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Meta.Numerics.Matrices;
 using Meta.Numerics;
-using alglib;
+using Accord.Math.Decompositions;
 using Meta.Numerics.Statistics.Distributions;
 
 namespace SteveBagnall.CmaEs_IPOP
@@ -14,7 +13,57 @@ namespace SteveBagnall.CmaEs_IPOP
 		private static NormalDistribution _normal = new NormalDistribution(0.0, 1.0);
 		private static Random _random = new Random();
 
-		public static double[] Resize(double[] array, int newSize)
+	    public static IEnumerable<TResult> Zip<TFirst, TSecond, TResult>(this IEnumerable<TFirst> first, IEnumerable<TSecond> second, Func<TFirst, TSecond, TResult> selector, bool checkLengths = true, bool fillMissing = false)
+	    {
+	        if (first == null) { throw new ArgumentNullException("first"); }
+	        if (second == null) { throw new ArgumentNullException("second"); }
+	        if (selector == null) { throw new ArgumentNullException("selector"); }
+
+	        using (IEnumerator<TFirst> e1 = first.GetEnumerator())
+	        {
+	            using (IEnumerator<TSecond> e2 = second.GetEnumerator())
+	            {
+	                while (true)
+	                {
+	                    bool more1 = e1.MoveNext();
+	                    bool more2 = e2.MoveNext();
+
+	                    if (!more1 || !more2)
+	                    { //one finished
+	                        if (checkLengths && !fillMissing && (more1 || more2))
+	                        { //checking length && not filling in missing values && ones not finished
+	                            throw new Exception("Enumerables have different lengths (" + (more1 ? "first" : "second") + " is longer)");
+	                        }
+
+	                        //fill in missing values with default(Tx) if asked too
+	                        if (fillMissing)
+	                        {
+	                            if (more1)
+	                            {
+	                                while (e1.MoveNext())
+	                                {
+	                                    yield return selector(e1.Current, default(TSecond));
+	                                }
+	                            }
+	                            else
+	                            {
+	                                while (e2.MoveNext())
+	                                {
+	                                    yield return selector(default(TFirst), e2.Current);
+	                                }
+	                            }
+	                        }
+
+	                        yield break;
+	                    }
+
+	                    yield return selector(e1.Current, e2.Current);
+	                }
+	            }
+	        }
+	    }
+
+        public static double[] Resize(double[] array, int newSize)
 		{
 			double[] newArray = new double[(array.Length > newSize) ? array.Length : newSize];
 
@@ -247,20 +296,22 @@ namespace SteveBagnall.CmaEs_IPOP
 			double[] eVal = new double[dimension];
 			double[,] eVec = new double[dimension, dimension];
 
-			for (int iterations = 1; iterations <= maxIterations; iterations++)
+
+            for (int iterations = 1; iterations <= maxIterations; iterations++)
 			{
-				if (evd.smatrixevd(a, dimension, 1, isUpper, ref eVal, ref eVec))
+			    var evd = new EigenvalueDecomposition(a,false,true);
+			    eVec = evd.Eigenvectors;
+			    eVal = evd.RealEigenvalues;
+
+				for (int r = 0; r < dimension; r++)
 				{
-					for (int r = 0; r < dimension; r++)
-					{
-						for (int c = 0; c < dimension; c++)
-							eigenVectors[r, c] = (double.IsNaN(eVec[r, c])) ? 0.0 : eVec[r, c];
+					for (int c = 0; c < dimension; c++)
+				    	eigenVectors[r, c] = (double.IsNaN(eVec[r, c])) ? 0.0 : eVec[r, c];
 
-						eigenValues[r, r] = (double.IsNaN(eVal[r])) ? 0.0 : eVal[r];
-					}
-
-					return iterations;
+					eigenValues[r, r] = (double.IsNaN(eVal[r])) ? 0.0 : eVal[r];
 				}
+
+				return iterations;
 			}
 
 			return maxIterations;

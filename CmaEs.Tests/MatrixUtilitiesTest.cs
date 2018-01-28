@@ -1,7 +1,6 @@
 ﻿using SteveBagnall.CmaEs_IPOP;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Linq;
 using Meta.Numerics.Matrices;
 using System.Collections.Generic;
 
